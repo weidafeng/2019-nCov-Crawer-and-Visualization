@@ -1,32 +1,5 @@
----
-title: 2019-nCov 爬虫、地图可视化
-top: true
-cover: true
-keywords: 2019-nCov 爬虫、地图可视化
-mathjax: false
-date: 2020-01-30 20:57:17
-author:  wdf
-summary:  爬虫获取数据、MongoDB存储数据、导出数据可视化
-categories:  
-	- 爬虫
-	- MongoDB
-	- pyecharts
-img:
-tags:
-	- 可视化
-	- pyecharts
----
 
 # 2019-nCov 爬虫、地图可视化
-
-
-我们学校连发了几条通知，刚开始说不让提前去，然后是不让去，现在是“提前去的话，全校通报批评”。
-
-这段时间医护人员前赴后继、奋战在最前线，他们是最可敬的人，相信武汉一定会好起来的，**武汉加油！**
-
-
-这两天看到几个有意思的项目，爬取丁香园网站的疫情数据，存储在MongoDB数据库，以及地图形式的可视化，代码不长，很方便学习、练手，这里做个笔记，分享给大家。
-
 
 ## 大纲
 1. 爬虫获取数据
@@ -37,7 +10,6 @@ tags:
 6. reference
 
 ## 1. 爬虫获取数据
-主要用到：
 ### requests
 
 完成浏览器的各种操作（get、post等），本项目用requets的get方法，获取丁香园网页内容。
@@ -56,8 +28,6 @@ True
 r = requests.session().get(url='https://3g.dxy.cn/newh5/view/pneumonia')
 ```
 
-
-
 ### re  
 
 正则表达式模块，有很强大的语法，主要用于字符串的模式匹配。
@@ -71,14 +41,11 @@ r = requests.session().get(url='https://3g.dxy.cn/newh5/view/pneumonia')
 
 ```python 
 soup = BeautifulSoup(r.content, 'lxml') 
-
-overall_information = re.search(r'\{("id".*?)\}', 
-							str(soup.find('script', attrs={'id': 'getStatisticsService'})))
+overall_information = re.search(r'\{("id".*?)\}',str(soup.find('script', attrs={'id': 'getStatisticsService'})))
 
 ```
 
 比如这一句，pattern为正则表达式格式，搜索范围用bs限制在`'getStatisticsService'`属性段内。
-
 
 
 ## 2. MongoDB存储数据
@@ -89,20 +56,20 @@ MongoDB是很常用的非关系型数据库，与之相对的是如MySQL等关�
 
 - 非关系型数据库以键值对存储，且结构不固定，每一个元组可以有不一样的字段，每个元组可以根据需要增加一些自己的键值对，不局限于固定的结构，可以减少一些时间和空间的开销。key-value数据库的主要特点是具有极高的并发读写性能.
 
-- 下载安装MongoDB数据库（完全开源、免费）
+1. 下载安装MongoDB数据库（完全开源、免费）
 	https://www.mongodb.com/  
 
-- 安装pymongo库
+2. 安装pymongo库
 	`pip install pymongo`
 
-- 新建数据库  
+3. 新建数据库  
 ```python 
-	from pymongo import MongoClient
+from pymongo import MongoClient
 
-	# 使用自己的本地数据库，端口默认为27017
-	client = MongoClient('localhost', 27017)
-	# 数据库命名为2019-nCov
-	db = client['2019-nCov']
+# 使用自己的本地数据库，端口默认为27017
+client = MongoClient('localhost', 27017)
+# 数据库命名为2019-nCov
+db = client['2019-nCov']
 ```
 
 - 插入/查找字段
@@ -180,19 +147,14 @@ map.render('render.html')
 - 结果：  
 ![可视化结果](./images/可视化结果.png)
 
-
-
 ## 5. 使用说明
-
-github：   
-https://github.com:weidafeng/2019-nCov-Crawer-and-Visualization
+github： https://github.com:weidafeng/2019-nCov-Crawer-and-Visualization
 
 usage：  
 1. python main.py  # 默认每分钟爬取一次，一次爬取后可以ctrl+C 关闭
 2. python render_map.py  # 地图可视化
 
-
-
 ## 6. reference
 1. https://zhuanlan.zhihu.com/p/104026698 
 2. https://github.com/BlankerL/DXY-2019-nCoV-Crawler
+3. https://3g.dxy.cn/newh5/view/pneumonia
