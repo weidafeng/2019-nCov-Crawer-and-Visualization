@@ -9,6 +9,10 @@
 5. 代码实现
 6. reference
 
+## 博客地址
+https://weidafeng.github.io/2020/01/30/2019-ncov-pa-chong-di-tu-ke-shi-hua/
+
+
 ## 1. 爬虫获取数据
 ### requests
 
@@ -148,7 +152,7 @@ map.render('render.html')
 ![可视化结果](./images/可视化结果.png)
 
 ## 5. 使用说明
-github： https://github.com:weidafeng/2019-nCov-Crawer-and-Visualization
+github： https://github.com/weidafeng/2019-nCov-Crawer-and-Visualization
 
 usage：  
 1. python main.py  # 默认每分钟爬取一次，一次爬取后可以ctrl+C 关闭
